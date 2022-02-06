@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <link href="/style/contacts.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script>
+        function getAll()
+        {
+            const arr=document.querySelectorAll("input[type='checkbox']:checked");
+            const ans=[];
+
+            for(con of arr)
+            {
+                ans.push(con.value);
+            }
+            // console.log(ans);
+            return ans;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+    <% if(contacts.length===0){ %>
+        <h1 style="color:red">No Contact Found !</h1>
+    <% } %>
+    <a href="/"><button class="home"><i class="fa fa-home"></i> Home</button></a>
+    <a href="/addContact"><button class="create"><i class="fa fa-plus"></i> Create Contact</button></a>
+
+    <% if(contacts.length!==0){ %>
+
+    <a href="/deleteContact/?arr=" onclick="location.href=this.href+getAll();return false;"><button class="delete"><i class="fa fa-trash"></i> Delete Contacts</button></a>
+
+    <form action="/search" method="post">
+    <input class="searchbar" name="search" type="text" placeholder="Search..."/>
+    <button class="search"><i class="fa fa-search"></i> Search</button>
+
+    </form>
+
+    <table align="center" border="1">
+        <tr>
+            <th></th><th><i class="fa fa-user"></i> Name</th><th><i class="fa fa-phone"></i> Phone</th><th><i class="fa fa-envelope"></i> Email</th>
+        </tr>
+        <% for(contact of contacts){ %>
+            <tr>
+                <td><input value="<%= contact._id %>" type="checkbox"/></td>
+                <td><%= contact.name%></td>
+                <td><%= contact.phone%></td>
+                <td><%= contact.email%></td>
+                <td><a style="color:blue" href="/update/?id=<%= contact._id%>&name=<%= contact.name %>&phone=<%= contact.phone %>&email=<%= contact.email %>"><i class="fa fa-edit"> edit</i></a></td>
+            </tr>
+        <% } %>
+    </table>
+    <% } %>
+    </div>
+</body>
+</html>

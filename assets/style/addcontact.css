@@ -1,0 +1,36 @@
+body{
+    background-color: gainsboro;
+}
+.container{
+    background-color: white;
+    border-radius: 5px;
+    width:70%;
+    margin:auto;
+    text-align: center;
+}
+h1{
+    padding-top:1rem;
+    color:green;
+}
+form label,input{
+    margin-bottom:10px;
+    padding: 5px;
+    font-size: 100%;
+    width:35%;
+}
+label{
+    font-weight: bolder;
+}
+input:focus{
+    outline: none;
+}
+button{
+    margin-bottom:1rem;
+    padding: 10px;
+    background-color: dodgerblue;
+    color: white;
+    border:none;
+    border-radius: 5px;
+    font-size: 100%;
+    cursor: pointer;
+}
