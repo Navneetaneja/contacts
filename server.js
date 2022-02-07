@@ -4,12 +4,17 @@ const PORT = 5000;
 const app = express();
 const database = require('./config/mongoose');
 const Contact = require('./model/contact');
+var obj="";
+
+//setting the view engine as ejs
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./assets'));
+
+// code for creating contacts with checking if user already exists or not
 
 app.post('/createContact', function (req, res) {
 
@@ -42,17 +47,18 @@ app.post('/createContact', function (req, res) {
                 }
                 else
                 {
-                    return res.redirect('back');
+                    return res.render('addContact',{error:"User Already Exists with these Credentials"});
                 }
             })
         }
         else{
-            return res.redirect('back');
+            return res.render('addContact',{error:"User Already Exists with these Credentials"});
         }
     })
     
 })
 
+//code for the home page
 
 app.get('/', function (req, res) {
     Contact.find({}, function (err, contact) {
@@ -64,11 +70,13 @@ app.get('/', function (req, res) {
     })
 })
 
+//code to redirect to add contact page
 
 app.get('/addContact', function (req, res) {
-    return res.render('addContact');
+    return res.render('addContact',{error:""});
 })
 
+//code for deleting the checked contacts
 
 app.get("/deleteContact/",function(req,res){
     // console.log(req.query.arr);
@@ -87,6 +95,7 @@ app.get("/deleteContact/",function(req,res){
     return res.redirect('back');
 })
 
+// code for searching contacts with name, phone and email
 
 app.post('/search',function(req,res){
 
@@ -108,16 +117,21 @@ app.post('/search',function(req,res){
     return res.redirect("/");
 })
 
+//creating the update page
 
 app.get("/update",function(req,res){
-    var obj={
+    obj={
         _id:req.query.id,
         name:req.query.name,
         phone:req.query.phone,
         email:req.query.email
     }
-    return res.render('update',{contact:obj});
+
+    return res.render('update',{contact:obj,error:""});
 })
+
+
+//code for updating contact
 
 app.post("/updateContact/",function(req,res){
 
@@ -153,7 +167,7 @@ app.post("/updateContact/",function(req,res){
                             })
                         }
                         else{
-                            return res.redirect('back');
+                            return res.render('update',{error:"User Already Exists with these Credentials",contact:obj});
                         }
                     })
                 }else{
@@ -169,7 +183,7 @@ app.post("/updateContact/",function(req,res){
                 }
 
             }else{
-                return res.redirect('back');
+                return res.render('update',{error:"User Already Exists with these Credentials",contact:obj});
             }
         })
     }else{
@@ -193,7 +207,7 @@ app.post("/updateContact/",function(req,res){
                     })
                 }
                 else{
-                    return res.redirect('back');
+                    return res.render('update',{error:"User Already Exists with these Credentials",contact:obj});
                 }
             })
         }else{
@@ -210,6 +224,9 @@ app.post("/updateContact/",function(req,res){
 
     }
 })
+
+
+//code for server to listen on specified port
 
 app.listen(PORT, function (err) {
     if (err) {

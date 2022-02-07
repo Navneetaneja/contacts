@@ -1,5 +1,7 @@
 const mongoose=require('mongoose');
 
+//creating the schema
+
 const contactSchema=new mongoose.Schema({
     name:{
         type:String,

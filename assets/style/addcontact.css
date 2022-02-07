@@ -1,6 +1,7 @@
 body{
     background-color: gainsboro;
 }
+
 .container{
     background-color: white;
     border-radius: 5px;
@@ -8,6 +9,7 @@ body{
     margin:auto;
     text-align: center;
 }
+
 h1{
     padding-top:1rem;
     color:green;
@@ -33,4 +35,7 @@ button{
     border-radius: 5px;
     font-size: 100%;
     cursor: pointer;
+}
+p{
+    padding: 1rem;
 }
